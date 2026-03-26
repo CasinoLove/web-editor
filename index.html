@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--
+Teleprompter
+
+Created by CasinoLove (Casinolove Kft.)
+Official company details:
+Registered name: Casinolove Kft.
+Jurisdiction: Hungary (European Union)
+Company Registration Number (Hungary): 14-09-318400
+Email: hello@casinolove.org
+Website: https://hu.casinolove.org/
+GitHub: https://github.com/CasinoLove
+
+License:
+This project is open source. Please check the LICENSE file in the GitHub repository or the license information on our website before reuse, modification, or redistribution.
+-->
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Web Editor</title>
+  <link rel="stylesheet" href="web-editor.css">
+</head>
+<body>
+  <div id="browser-warning" class="browser-warning hidden" role="alert">
+    <div class="browser-warning-text">
+      This app is designed mainly for desktop Chromium-based browsers. Some features may be limited in your current browser or device.
+    </div>
+    <button id="dismiss-warning" class="icon-button" type="button" aria-label="Dismiss warning">×</button>
+  </div>
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <strong>Web Editor</strong>
+      <span class="muted">Local project editor and preview</span>
+
+      <nav class="menu-bar" aria-label="Main menu">
+        <div class="menu-wrap">
+          <button id="file-menu-toggle" class="menu-button" type="button" aria-haspopup="true" aria-expanded="false">File</button>
+          <div id="file-menu" class="menu-panel hidden" role="menu">
+            <button id="new-project-btn" type="button" role="menuitem">New project</button>
+            <button id="add-example-project-btn" type="button" role="menuitem">Add example project</button>
+            <div class="menu-divider"></div>
+            <button id="add-file-btn" type="button" role="menuitem">Add file</button>
+            <button id="add-folder-btn" type="button" role="menuitem">Add folder</button>
+            <button id="import-files-btn" type="button" role="menuitem">Import files</button>
+            <button id="import-folder-btn" type="button" role="menuitem">Import folder</button>
+            <div class="menu-divider"></div>
+            <button id="export-zip-btn" type="button" role="menuitem">Download ZIP</button>
+          </div>
+        </div>
+
+        <div class="menu-wrap">
+          <button id="settings-menu-toggle" class="menu-button" type="button" aria-haspopup="true" aria-expanded="false">Settings</button>
+          <div id="settings-menu" class="menu-panel settings-menu hidden" role="menu">
+            <label>
+              <span>Theme</span>
+              <select id="theme-select">
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+              </select>
+            </label>
+            <label>
+              <span>Editor font size</span>
+              <select id="font-size-select">
+                <option value="13">13 px</option>
+                <option value="14">14 px</option>
+                <option value="15">15 px</option>
+                <option value="16">16 px</option>
+                <option value="18">18 px</option>
+                <option value="20">20 px</option>
+              </select>
+            </label>
+            <label>
+              <span>Editor font</span>
+              <select id="font-family-select">
+                <option value="system">System monospace</option>
+                <option value="consolas">Consolas</option>
+                <option value="courier-new">Courier New</option>
+                <option value="lucida-console">Lucida Console</option>
+              </select>
+            </label>
+            <label class="settings-checkbox-row">
+              <span>Syntax highlighting</span>
+              <input id="syntax-highlight-toggle" type="checkbox">
+            </label>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <section id="files-pane" class="pane files-pane" data-pane="files">
+      <div class="pane-header">
+        <div class="pane-title">Files</div>
+        <div class="pane-actions">
+          <button id="hide-files-btn" class="icon-button pane-toggle-button" type="button" aria-label="Hide files pane">◀</button>
+        </div>
+      </div>
+
+      <div id="drop-zone" class="drop-zone">
+        Drop files or folders here
+      </div>
+
+      <div id="file-tree" class="file-tree" aria-label="Project files"></div>
+    </section>
+
+    <div id="splitter-files" class="splitter" aria-hidden="true"></div>
+
+    <section id="editor-pane" class="pane editor-pane" data-pane="editor">
+      <div class="pane-header">
+        <div class="pane-title">
+          <span>Editor</span>
+          <span id="editor-file-label" class="muted"></span>
+        </div>
+        <div class="pane-actions">
+          <button id="save-btn" type="button">Save</button>
+          <button id="hide-editor-btn" class="icon-button pane-toggle-button" type="button" aria-label="Hide editor pane">◀</button>
+        </div>
+      </div>
+      <div id="editor-empty" class="empty-state">
+        Open a text-based file to edit it here.
+      </div>
+      <div id="editor-binary-note" class="empty-state hidden">
+        This editor only supports text files.
+      </div>
+      <div id="editor-shell" class="editor-shell hidden">
+        <pre id="syntax-highlight" class="syntax-highlight" aria-hidden="true"></pre>
+        <textarea id="code-editor" class="code-editor" spellcheck="false"></textarea>
+      </div>
+    </section>
+
+    <div id="splitter-preview" class="splitter" aria-hidden="true"></div>
+
+    <section id="preview-pane" class="pane preview-pane" data-pane="preview">
+      <div class="pane-header">
+        <div class="pane-title">
+          <span>Preview</span>
+          <span id="preview-file-label" class="muted"></span>
+        </div>
+        <div class="pane-actions">
+          <div id="preview-controls" class="pane-actions hidden">
+            <button id="zoom-out-btn" type="button">−</button>
+            <span id="zoom-label">100%</span>
+            <button id="zoom-in-btn" type="button">+</button>
+            <button id="zoom-reset-btn" type="button">100%</button>
+          </div>
+          <button id="hide-preview-btn" class="icon-button pane-toggle-button" type="button" aria-label="Hide preview pane">▶</button>
+        </div>
+      </div>
+      <div id="preview-empty" class="empty-state">
+        Open a file to preview it here.
+      </div>
+      <iframe id="html-preview" class="preview-frame hidden" sandbox="allow-scripts allow-modals allow-same-origin"></iframe>
+      <div id="image-preview-wrap" class="image-preview-wrap hidden">
+        <img id="image-preview" alt="">
+      </div>
+    </section>
+  </main>
+
+  <input id="import-files-input" type="file" multiple hidden>
+  <input id="import-folder-input" type="file" webkitdirectory directory multiple hidden>
+
+  <div id="pane-restore-dock" class="pane-restore-dock hidden" aria-label="Restore hidden panes"></div>
+
+  <script src="web-editor.js"></script>
+</body>
+</html>
