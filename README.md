@@ -381,7 +381,7 @@ No server-side runtime is required.
 No API service is required.
 
 Typical hosting options
-~~~~~~~~~~~~~~~~~~~~~~~
+----------------
 
 * NGINX static site
 * Apache static site
@@ -390,7 +390,7 @@ Typical hosting options
 * local LAN static hosting
 
 Local testing
-~~~~~~~~~~~~~
+----------------
 
 For local testing, a basic static HTTP server is usually enough.
 
@@ -403,7 +403,7 @@ Examples include:
 Serving over HTTP rather than opening the file directly from disk is recommended for more consistent browser behavior.
 
 System administrator notes
---------------------------
+----------------
 
 From an infrastructure perspective, this app is low-maintenance.
 
