@@ -142,14 +142,14 @@ User guide
 ----------
 
 Creating a new project
-~~~~~~~~~~~~~~~~~~~~~~
+----------------
 
 Use the New project command to start with a completely empty local project.
 
 This clears the current stored project for the app origin and starts fresh.
 
 Adding files and folders
-~~~~~~~~~~~~~~~~~~~~~~~~
+----------------
 
 You can add content in several ways:
 
@@ -160,7 +160,7 @@ You can add content in several ways:
 * drag and drop files or folders into the file area
 
 Editing text files
-~~~~~~~~~~~~~~~~~~
+----------------
 
 When you open a text-based file, it appears in the editor pane.
 
@@ -169,7 +169,7 @@ The current workflow allows one opened file at a time. If you made changes, the 
 This was chosen to keep the first version simple and predictable.
 
 Previewing files
-~~~~~~~~~~~~~~~~
+----------------
 
 Preview behavior depends on file type:
 
@@ -181,7 +181,7 @@ Preview behavior depends on file type:
 For images, the preview provides zoom controls.
 
 Syntax highlighting
-~~~~~~~~~~~~~~~~~~~
+----------------
 
 Syntax highlighting is optional and off by default.
 
@@ -197,7 +197,7 @@ SVG benefits from XML-style highlighting.
 This highlighting is intentionally lightweight. The goal is clarity, not full IDE-level parsing.
 
 Settings
-~~~~~~~~
+----------------
 
 The settings menu currently includes:
 
@@ -268,7 +268,7 @@ Typical structure:
 * `web-editor.js`
 
 General architecture
-~~~~~~~~~~~~~~~~~~~~
+----------------
 
 The codebase is centered around a few main responsibilities:
 
@@ -290,7 +290,7 @@ The design is intentionally modular enough to expand later with features such as
 * additional file-type behaviors
 
 Preview design details
-~~~~~~~~~~~~~~~~~~~~~~
+----------------
 
 The preview layer is the most custom part of the project.
 
@@ -308,7 +308,7 @@ This is why the preview can support cases such as:
 * runtime-assigned asset URLs
 
 Why the preview uses a sandboxed iframe
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------
 
 The preview uses an iframe with permissions that allow local scripts to run and local project assets to be resolved.
 
@@ -321,7 +321,7 @@ In practical terms, previewed code should be treated as trusted local project co
 That is a design choice, not an accidental side effect.
 
 Syntax highlighting design
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------
 
 The syntax highlighting is intentionally lightweight.
 
@@ -330,7 +330,7 @@ It is meant to improve readability without turning the editor into a full IDE. T
 This keeps the app simpler and avoids forcing highlighting behavior on users who prefer a plain editor.
 
 Why no external code editor dependency
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------
 
 The project is intentionally lightweight and self-contained.
 
